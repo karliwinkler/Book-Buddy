@@ -3,12 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.Genre.*;
+
 // represents collection of user's books, including books they've read recently,
 // their favourite books, and books they want to read
 public class BookCollection {
-    List<Book> readBooks;
-    List<Book> favouriteBooks;
-    List<Book> wantToRead;
+    private List<Book> readBooks;
+    private List<Book> favouriteBooks;
+    private List<Book> wantToRead;
 
     // effects: constructs empty list of books read, empty list of favourite books, and empty want-to-read list
     public BookCollection() {
@@ -18,11 +20,8 @@ public class BookCollection {
     }
 
     // modifies: this
-    // effects: adds book to read books list and removes it from want to read (if it's there)
+    // effects: adds book to read books list
     public void readBook(Book book) {
-        if (wantToRead.contains(book)) {
-            removeFromWantToRead(book);
-        }
         readBooks.add(book);
     }
 
@@ -38,14 +37,20 @@ public class BookCollection {
     }
 
     // modifies: this
-    // effects: adds book to list of books user would like to read and returns true.
-    // if book is already in list or is in read books, returns false.
-    public boolean wantToReadBook(Book book) {
-        if (!wantToRead.contains(book) && !readBooks.contains(book)) {
-            wantToRead.add(book);
+    // effects: if book is in favourites list, removes it from favourites list and returns true,
+    // otherwise returns false.
+    public boolean removeFavouriteBook(Book book) {
+        if (favouriteBooks.contains(book)) {
+            favouriteBooks.remove(book);
             return true;
         }
         return false;
+    }
+
+    // modifies: this
+    // effects: adds book to list of books user would like to read.
+    public void wantToReadBook(Book book) {
+        wantToRead.add(book);
     }
 
     // modifies: this
@@ -108,6 +113,19 @@ public class BookCollection {
             }
         }
         return topAuth;
+    }
+
+    // effects: retrieves book with given title from read books list, if no book with title is found,
+    // return book with empty title, author, and genre.
+    public Book getBook(String title) {
+        Book emptyBook = new Book("","", none);
+
+        for (Book b : readBooks) {
+            if (title.equals(b.getTitle())) {
+                return b;
+            }
+        }
+        return emptyBook;
     }
 
     //getters

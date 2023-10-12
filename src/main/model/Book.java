@@ -34,7 +34,6 @@ public class Book {
     }
 
     // getters
-
     public String getTitle() {
         return title;
     }

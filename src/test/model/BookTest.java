@@ -6,18 +6,18 @@ import static model.Genre.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {
-    Book testBook;
+    private Book testBook;
 
     @BeforeEach
     public void runBefore() {
-        testBook = new Book("Pride and Prejudice", "Jane Austen", CLASSIC);
+        testBook = new Book("Pride and Prejudice", "Jane Austen", classic);
     }
 
     @Test
     public void testConstructor() {
         assertEquals("Pride and Prejudice", testBook.getTitle());
         assertEquals("Jane Austen", testBook.getAuthor());
-        assertEquals(CLASSIC, testBook.getGenre());
+        assertEquals(classic, testBook.getGenre());
         assertEquals(0, testBook.getRating());
         assertNull(testBook.getReview());
     }
