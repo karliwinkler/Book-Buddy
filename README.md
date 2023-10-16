@@ -33,3 +33,7 @@ myself and someone who would actually use an application like this.
 -	As a user, I want to be able to add a rating out of five stars to a book I’ve read.
 -	As a user, I want to be able to see statistics of which genres and authors I’ve read the most of.
 
+
+-   As a user, I want to be able to have the option to save the list of books I've read, my want to read list, 
+and my favourites list to file.
+-   As a user, I want to have the option to load my saved lists of books from file when I start the application.
