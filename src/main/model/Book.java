@@ -1,8 +1,13 @@
 package model;
 
 
+import org.json.JSONObject;
+import persistence.Writable;
+
+import java.util.List;
+
 // represents a book with title, author, genre, and user's rating and review
-public class Book {
+public class Book implements Writable {
     private String title;
     private String author;
     private Genre genre;
@@ -14,6 +19,7 @@ public class Book {
         this.title = title;
         this.author = author;
         this.genre = genre;
+        this.review = "no review yet.";
     }
 
     // modifies: this
@@ -31,6 +37,36 @@ public class Book {
     // effects: adds user's review to book
     public void reviewBook(String review) {
         this.review = review;
+    }
+
+    // effects: returns true if this has same fields as given book
+    public boolean checkSameBook(Book other) {
+        return this.title.equals(other.getTitle())
+                && this.author.equals(other.getAuthor())
+                && this.genre == other.getGenre()
+                && this.rating == other.getRating()
+                && this.review.equals(other.getReview());
+    }
+
+    // effects: returns true if given list of books contains this
+    public boolean containsBook(List<Book> books) {
+        for (Book next : books) {
+            if (this.checkSameBook(next)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("author", author);
+        json.put("genre", genre);
+        json.put("rating", rating);
+        json.put("review", review);
+        return json;
     }
 
     // getters

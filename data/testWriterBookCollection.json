@@ -1,0 +1,23 @@
+{
+    "read books": [{
+        "author": "test",
+        "review": "Great book!",
+        "genre": "mystery",
+        "rating": 5,
+        "title": "test"
+    }],
+    "want to read": [{
+        "author": "test2",
+        "review": "no review yet.",
+        "genre": "scifi",
+        "rating": 0,
+        "title": "test2"
+    }],
+    "favourite books": [{
+        "author": "test",
+        "review": "Great book!",
+        "genre": "mystery",
+        "rating": 5,
+        "title": "test"
+    }]
+}

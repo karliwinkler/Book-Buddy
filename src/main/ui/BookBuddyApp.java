@@ -3,7 +3,11 @@ package ui;
 import model.Book;
 import model.BookCollection;
 import model.Genre;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,12 +15,15 @@ import static model.Genre.*;
 
 // BookBuddy reading tracker application
 public class BookBuddyApp {
+    private static final String JSON_STORE = "./data/bookbuddy.json";
     private BookCollection bookCollection;
     private Scanner input;
     private Boolean mainDisplayed;
     private Boolean menu1Displayed;
     private Boolean menu2Displayed;
     private Boolean menu3Displayed;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // effects: runs book buddy application
     public BookBuddyApp() {
@@ -50,6 +57,8 @@ public class BookBuddyApp {
         bookCollection = new BookCollection();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // effects: displays main menu of options
@@ -58,6 +67,8 @@ public class BookBuddyApp {
         System.out.println("\t1 -> view books you've read");
         System.out.println("\t2 -> view books you want to read");
         System.out.println("\t3 -> view favourite books");
+        System.out.println("\ts -> save your books");
+        System.out.println("\tl -> load saved books");
         System.out.println("Press \"q\" at any time to quit, or \"b\" to return to main menu.");
         mainDisplayed = true;
         menu1Displayed = false;
@@ -123,6 +134,10 @@ public class BookBuddyApp {
             displayMenu2();
         } else if (command.equals("3")) {
             displayMenu3();
+        } else if (command.equals("s")) {
+            saveBookCollection();
+        } else if (command.equals("l")) {
+            loadBookCollection();
         }
     }
 
@@ -170,13 +185,8 @@ public class BookBuddyApp {
         }
 
         for (Book b : books) {
-            if (b.getReview() == null) {
-                System.out.println(b.getTitle() + " by " + b.getAuthor() + " - " + b.getRating()
-                        + "/5 stars," + " no review.");
-            } else {
-                System.out.println(b.getTitle() + " by " + b.getAuthor() + " - " + b.getRating()
-                        + "/5 stars," + " review: " + b.getReview());
-            }
+            System.out.println(b.getTitle() + " by " + b.getAuthor() + " - " + b.getRating()
+                    + "/5 stars," + " review: " + b.getReview());
         }
     }
 
@@ -323,5 +333,29 @@ public class BookBuddyApp {
             displayMenu3();
         }
     }
+
+    // effects: saves book collection to file
+    private void saveBookCollection() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(bookCollection);
+            jsonWriter.close();
+            System.out.println("Saved your books to " + JSON_STORE + "!");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // modifies: this
+    // effects: loads book collection from file
+    private void loadBookCollection() {
+        try {
+            bookCollection = jsonReader.read();
+            System.out.println("Loaded books from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
 
 }

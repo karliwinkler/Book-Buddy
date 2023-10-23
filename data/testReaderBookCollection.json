@@ -1,0 +1,18 @@
+{
+  "read books": [
+    {
+      "author": "Donna Tartt",
+      "review": "Great book!",
+      "genre": "mystery",
+      "rating": 5,
+      "title": "The Secret History"
+    }],
+  "want to read": [],
+  "favourite books": [{
+    "author": "Donna Tartt",
+    "review": "Great book!",
+    "genre": "mystery",
+    "rating": 5,
+    "title": "The Secret History"
+  }]
+}

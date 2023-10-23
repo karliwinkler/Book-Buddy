@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +11,7 @@ import static model.Genre.*;
 
 // represents collection of user's books, including books they've read recently,
 // their favourite books, and books they want to read
-public class BookCollection {
+public class BookCollection implements Writable {
     private List<Book> readBooks;
     private List<Book> favouriteBooks;
     private List<Book> wantToRead;
@@ -29,7 +33,7 @@ public class BookCollection {
     // effects: if book is in read books list, adds book to favourites list and returns true,
     // otherwise returns false.
     public boolean addFavouriteBook(Book book) {
-        if (readBooks.contains(book)) {
+        if (book.containsBook(readBooks)) {
             favouriteBooks.add(book);
             return true;
         }
@@ -126,6 +130,25 @@ public class BookCollection {
             }
         }
         return emptyBook;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("read books", listToJson(readBooks));
+        json.put("want to read", listToJson(wantToRead));
+        json.put("favourite books", listToJson(favouriteBooks));
+        return json;
+    }
+
+    // effects: returns given book list as JSON array
+    private JSONArray listToJson(List<Book> books) {
+        JSONArray jsonarray = new JSONArray();
+
+        for (Book b : books) {
+            jsonarray.put(b.toJson());
+        }
+        return jsonarray;
     }
 
     //getters
