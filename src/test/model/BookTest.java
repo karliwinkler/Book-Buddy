@@ -46,11 +46,29 @@ class BookTest {
     }
 
     @Test
-    public void testCheckSameBook() {
+    public void testCheckSameBookTrue() {
         Book testBook2 = new Book("Pride and Prejudice", "Jane Austen", classic);
-        Book testBook3 = new Book("Pride and Prejudice", "Jane Doe", classic);
         assertTrue(testBook.checkSameBook(testBook2));
+    }
+
+    @Test
+    public void testCheckSameBookFalse() {
+        Book testBook2 = new Book("Pride and Prejudice", "Jane Austen", classic);
+        testBook2.reviewBook("awesome.");
+        assertFalse(testBook.checkSameBook(testBook2));
+
+        Book testBook3 = new Book("Pride, Prejudice, and Zombies", "Jane Austen", classic);
         assertFalse(testBook.checkSameBook(testBook3));
+
+        Book testBook4 = new Book("Pride and Prejudice", "Jane Doe", classic);
+        assertFalse(testBook.checkSameBook(testBook4));
+
+        Book testBook5 = new Book("Pride and Prejudice", "Jane Doe", fantasy);
+        assertFalse(testBook.checkSameBook(testBook5));
+
+        Book testBook6 = new Book("Pride and Prejudice", "Jane Austen", classic);
+        testBook6.rateBook(5);
+        assertFalse(testBook.checkSameBook(testBook6));
     }
 
     @Test
