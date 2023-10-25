@@ -63,7 +63,7 @@ class BookTest {
         Book testBook4 = new Book("Pride and Prejudice", "Jane Doe", classic);
         assertFalse(testBook.checkSameBook(testBook4));
 
-        Book testBook5 = new Book("Pride and Prejudice", "Jane Doe", fantasy);
+        Book testBook5 = new Book("Pride and Prejudice", "Jane Austen", fantasy);
         assertFalse(testBook.checkSameBook(testBook5));
 
         Book testBook6 = new Book("Pride and Prejudice", "Jane Austen", classic);
