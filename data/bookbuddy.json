@@ -1,11 +1,20 @@
 {
-    "read books": [{
-        "author": "f",
-        "review": "no review yet.",
-        "genre": "contemporary",
-        "rating": 0,
-        "title": "fa"
-    }],
+    "read books": [
+        {
+            "author": "donna tartt",
+            "review": "no review yet.",
+            "genre": "contemporary",
+            "rating": 0,
+            "title": "the secret history"
+        },
+        {
+            "author": "margaret atwood",
+            "review": "no review yet.",
+            "genre": "scifi",
+            "rating": 5,
+            "title": "the handmaids tale"
+        }
+    ],
     "want to read": [],
     "favourite books": []
 }

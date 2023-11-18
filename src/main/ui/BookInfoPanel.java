@@ -1,0 +1,99 @@
+package ui;
+
+import model.Book;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BookInfoPanel extends JPanel implements Constants, ActionListener {
+    Book book;
+    JLabel title;
+    JLabel author;
+    JLabel rating;
+    JLabel review;
+    JButton rateButton;
+    JButton reviewButton;
+
+    public BookInfoPanel(Book book) {
+        this.book = book;
+        this.setPreferredSize(new Dimension(200, 100));
+        this.setBackground(accentColor);
+        setUpLabels();
+        setUpButtons();
+
+    }
+
+    public void setUpLabels() {
+        title = new JLabel(book.getTitle());
+        title.setFont(medBoldFont);
+        title.setForeground(fontColor);
+        this.add(title);
+
+        author = new JLabel(book.getAuthor());
+        author.setFont(new Font(Font.SERIF, Font.ITALIC, 18));
+        author.setForeground(fontColor);
+        author.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        this.add(author);
+
+        rating = new JLabel("My rating: " + book.getRating() + "/5 stars");
+        rating.setFont(smallFont);
+        rating.setForeground(fontColor);
+        this.add(rating);
+
+        review = new JLabel("My review: " + book.getReview());
+        review.setFont(smallFont);
+        review.setForeground(fontColor);
+        this.add(review);
+
+    }
+
+    public void setUpButtons() {
+        rateButton = new JButton("add rating");
+        rateButton.addActionListener(this);
+        rateButton.setFont(smallFont);
+        rateButton.setForeground(fontColor);
+        rateButton.setPreferredSize(smallButtonSize);
+        this.add(rateButton);
+
+        reviewButton = new JButton("add review");
+        reviewButton.addActionListener(this);
+        reviewButton.setFont(smallFont);
+        reviewButton.setForeground(fontColor);
+        reviewButton.setPreferredSize(smallButtonSize);
+        this.add(reviewButton);
+    }
+
+    public void update() {
+        this.removeAll();
+        setUpLabels();
+        setUpButtons();
+        this.revalidate();
+        this.repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == rateButton) {
+            String[] ratings = {"1 star - terrible", "2 stars - not very good", "3 stars - ok",
+                    "4 stars - pretty good!", "5 stars - amazing!"};
+            JComboBox comboBox = new JComboBox(ratings);
+            comboBox.setSelectedIndex(4);
+            JOptionPane.showOptionDialog(null, comboBox, "Choose a rating",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 1);
+
+            int rating = comboBox.getSelectedIndex() + 1;
+            book.rateBook(rating);
+            update();
+        }
+
+        if (e.getSource() == reviewButton) {
+            String review = JOptionPane.showInputDialog(null, "Please enter your review",
+                    "Review Book", JOptionPane.PLAIN_MESSAGE);
+
+            book.reviewBook(review);
+            update();
+        }
+    }
+}

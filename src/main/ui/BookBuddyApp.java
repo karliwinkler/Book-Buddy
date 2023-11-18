@@ -6,6 +6,7 @@ import model.Genre;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Scanner;
 import static model.Genre.*;
 
 // BookBuddy reading tracker application
-public class BookBuddyApp {
+public class BookBuddyApp extends JFrame {
     private static final String JSON_STORE = "./data/bookbuddy.json";
     private BookCollection bookCollection;
     private Scanner input;
@@ -24,6 +25,10 @@ public class BookBuddyApp {
     private Boolean menu3Displayed;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private MainMenuPanel menuPanel;
+    private ReadListPanel readListPanel;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
 
     // effects: runs book buddy application
     public BookBuddyApp() {
@@ -59,6 +64,14 @@ public class BookBuddyApp {
         input.useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+
+        this.setTitle("BookBuddy");
+        this.setSize(WIDTH, HEIGHT);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        menuPanel = new MainMenuPanel(this);
+        this.add(menuPanel);
+
+        this.setVisible(true);
     }
 
     // effects: displays main menu of options
@@ -215,6 +228,7 @@ public class BookBuddyApp {
         } else {
             Book book = new Book(title, author, genre);
             bookCollection.readBook(book);
+            readListPanel.updateListPanel();
             System.out.printf("Successfully added " + title + " by " + author + ", genre: " + genre
                     + " to the books you've read!");
         }
@@ -252,6 +266,7 @@ public class BookBuddyApp {
             System.out.println("\nPlease enter your rating out of 5 stars.");
             int rate = Integer.parseInt(input.next());
             if (book.rateBook(rate)) {
+                readListPanel.updateListPanel();
                 System.out.println("Successfully rated " + book.getTitle() + " " + rate + " stars!");
             } else {
                 System.out.println("\nPlease choose a number between 1 and 5");
@@ -335,7 +350,7 @@ public class BookBuddyApp {
     }
 
     // effects: saves book collection to file
-    private void saveBookCollection() {
+    protected void saveBookCollection() {
         try {
             jsonWriter.open();
             jsonWriter.write(bookCollection);
@@ -348,13 +363,18 @@ public class BookBuddyApp {
 
     // modifies: this
     // effects: loads book collection from file
-    private void loadBookCollection() {
+    protected void loadBookCollection() {
         try {
             bookCollection = jsonReader.read();
             System.out.println("Loaded books from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    // getters
+    public BookCollection getBookCollection() {
+        return bookCollection;
     }
 
 
