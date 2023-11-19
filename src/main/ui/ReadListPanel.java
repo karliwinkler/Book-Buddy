@@ -167,6 +167,8 @@ public class ReadListPanel extends JPanel implements Constants, ActionListener {
             if (!titleStr.equals("") && !authorStr.equals("")) {
                 Book book = new Book(titleStr, authorStr, selectGenre(genreStr));
                 appFrame.getBookCollection().readBook(book);
+                titleField.setText("");
+                authorField.setText("");
                 updateListPanel();
             }
         }

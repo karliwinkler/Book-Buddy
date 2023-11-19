@@ -37,3 +37,16 @@ myself and someone who would actually use an application like this.
 -   As a user, I want to be able to have the option to save the list of books I've read, my want to read list, 
 and my favourites list to file.
 -   As a user, I want to have the option to load my saved lists of books from file when I start the application.
+
+# Instructions for Grader
+
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by adding a book
+to your read list. Press the button on the main menu "view books I've read", then enter the title, author, and genre 
+in the text fields at the bottom of the screen.
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by adding a rating
+and/or review to a book you've read. Double-click the book you'd like to rate from the list of read books and click 
+the "rate book" or "review book" buttons on the right side panel. 
+- You can locate my visual component by opening the application - you should see a gif of a book on the main menu. 
+There is also a small image of an arrow on a button on the read list page.
+- You can save the state of my application by clicking the "save books" button on the main menu.
+- You can reload the state of my application by clicking the "load books" button on the main menu.
