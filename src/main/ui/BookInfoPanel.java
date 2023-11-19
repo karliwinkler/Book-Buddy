@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// side panel with info on specific book and option to rate and review book
 public class BookInfoPanel extends JPanel implements Constants, ActionListener {
     Book book;
     JLabel title;
@@ -25,7 +26,9 @@ public class BookInfoPanel extends JPanel implements Constants, ActionListener {
 
     }
 
-    public void setUpLabels() {
+    // modifies: this
+    // effects: creates and adds labels to panel
+    private void setUpLabels() {
         title = new JLabel(book.getTitle());
         title.setFont(medBoldFont);
         title.setForeground(fontColor);
@@ -49,7 +52,9 @@ public class BookInfoPanel extends JPanel implements Constants, ActionListener {
 
     }
 
-    public void setUpButtons() {
+    // modifies: this
+    // effects: creates and adds buttons to panel
+    private void setUpButtons() {
         rateButton = new JButton("add rating");
         rateButton.addActionListener(this);
         rateButton.setFont(smallFont);
@@ -65,7 +70,9 @@ public class BookInfoPanel extends JPanel implements Constants, ActionListener {
         this.add(reviewButton);
     }
 
-    public void update() {
+    // modifies: this
+    // effects: removes and reloads labels to reflect changes to book info
+    private void update() {
         this.removeAll();
         setUpLabels();
         setUpButtons();
@@ -73,6 +80,8 @@ public class BookInfoPanel extends JPanel implements Constants, ActionListener {
         this.repaint();
     }
 
+    // modifies: this
+    // effects: executes action based on button pressed
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == rateButton) {

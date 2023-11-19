@@ -13,6 +13,13 @@
             "genre": "scifi",
             "rating": 5,
             "title": "the handmaids tale"
+        },
+        {
+            "author": "george rr martin",
+            "review": "epic book!!!",
+            "genre": "fantasy",
+            "rating": 4,
+            "title": "game of thrones"
         }
     ],
     "want to read": [],

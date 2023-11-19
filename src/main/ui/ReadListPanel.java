@@ -1,7 +1,6 @@
 package ui;
 
 import model.Book;
-import model.BookCollection;
 import model.Genre;
 
 import javax.swing.*;
@@ -12,37 +11,44 @@ import java.util.List;
 
 import static model.Genre.*;
 
+// panel showing list of read books, option to add books, and book info
 public class ReadListPanel extends JPanel implements Constants, ActionListener {
-    private BookCollection bookCollection;
+    private BookBuddyApp appFrame;
     private ListPanel listPanel;
     private JPanel bottomPanel;
+    private JPanel topPanel;
 
     private JButton backButton;
     private JButton addBookButton;
-    private JButton statsButton;
     private JTextField titleField;
     private JTextField authorField;
     private JComboBox genreOptions;
 
-    public ReadListPanel(BookCollection bookCollection) {
+    public ReadListPanel(BookBuddyApp appFrame) {
         this.setLayout(new BorderLayout(20, 20));
-        this.bookCollection = bookCollection;
-
+        this.appFrame = appFrame;
         this.setBackground(backgroundColor);
-        JLabel title = new JLabel("My read books", SwingConstants.CENTER);
-        title.setForeground(fontColor);
-        title.setFont(largeBoldFont);
-        this.add(title, BorderLayout.PAGE_START);
 
+        topPanel = new JPanel();
         listPanel = new ListPanel(this);
-        this.add(listPanel, BorderLayout.CENTER);
+        bottomPanel = new JPanel();
 
         setUpFields();
         setUpButtons();
 
+        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        topPanel.setBackground(backgroundColor);
+        JLabel title = new JLabel("My read books");
+        title.setForeground(fontColor);
+        title.setFont(largeBoldFont);
+        topPanel.add(Box.createHorizontalStrut(160));
+        topPanel.add(title);
+
         bottomPanel.setBackground(backgroundColor);
         bottomPanel.setPreferredSize(new Dimension(100, 100));
 
+        this.add(topPanel, BorderLayout.PAGE_START);
+        this.add(listPanel, BorderLayout.CENTER);
         this.add(makeLeftPanel(), BorderLayout.LINE_START);
         this.add(makeRightPanel(), BorderLayout.LINE_END);
         this.add(bottomPanel, BorderLayout.PAGE_END);
@@ -50,24 +56,24 @@ public class ReadListPanel extends JPanel implements Constants, ActionListener {
         this.setVisible(true);
     }
 
-    public void setUpFields() {
-        bottomPanel = new JPanel();
-
+    // modifies: this
+    // effects: creates and initializes textfields and combo box
+    private void setUpFields() {
         titleField = new JTextField();
         titleField.addActionListener(this);
-        setUpComponent(titleField, "Title:");
+        initComponent(titleField, "Title:");
 
         authorField = new JTextField();
         authorField.addActionListener(this);
-        setUpComponent(authorField, "Author:");
+        initComponent(authorField, "Author:");
 
         String[] genres = {"classic", "fantasy", "mystery", "non-fiction", "romance", "contemporary", "sci-fi",};
         genreOptions = new JComboBox(genres);
         genreOptions.addActionListener(this);
-        setUpComponent(genreOptions, "Genre: ");
+        initComponent(genreOptions, "Genre: ");
     }
 
-    public void setUpComponent(JComponent component, String labelStr) {
+    private void initComponent(JComponent component, String labelStr) {
         component.setFont(smallFont);
         component.setForeground(fontColor);
         component.setPreferredSize(textFieldSize);
@@ -80,14 +86,18 @@ public class ReadListPanel extends JPanel implements Constants, ActionListener {
         bottomPanel.add(component);
     }
 
-    public JPanel makeLeftPanel() {
+    // modifies: this
+    // effects: creates plain left panel
+    private JPanel makeLeftPanel() {
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(backgroundColor);
         leftPanel.setPreferredSize(new Dimension(50, 200));
         return leftPanel;
     }
 
-    public JPanel makeRightPanel() {
+    // modifies: this
+    // effects: creates right panel with "no books selected"
+    private JPanel makeRightPanel() {
         JPanel rightPanel = new JPanel();
         rightPanel.setBackground(accentColor);
         rightPanel.setPreferredSize(new Dimension(200, 200));
@@ -99,30 +109,27 @@ public class ReadListPanel extends JPanel implements Constants, ActionListener {
         return rightPanel;
     }
 
-    public void setUpButtons() {
-        backButton = new JButton("back");
+    // modifies: this
+    // effects: creates and initializes buttons
+    private void setUpButtons() {
+        backButton = new JButton(new ImageIcon("brown arrow.png"));
         backButton.addActionListener(this);
-        backButton.setFont(smallFont);
-        backButton.setForeground(fontColor);
-        backButton.setPreferredSize(smallButtonSize);
+        backButton.setPreferredSize(new Dimension(75, 50));
+        backButton.setBorder(null);
+        topPanel.add(backButton);
 
         addBookButton = new JButton("add new book");
         addBookButton.addActionListener(this);
         addBookButton.setFont(smallFont);
         addBookButton.setForeground(fontColor);
         addBookButton.setPreferredSize(smallButtonSize);
+        addBookButton.setFocusable(false);
         bottomPanel.add(addBookButton);
-
-        statsButton = new JButton("my reading stats");
-        statsButton.addActionListener(this);
-        statsButton.setFont(smallFont);
-        statsButton.setForeground(fontColor);
-        statsButton.setPreferredSize(smallButtonSize);
-        bottomPanel.add(statsButton);
 
     }
 
-    public Genre selectGenre(String genreStr) {
+    // effects: helper method that returns correct genre based on given string
+    private Genre selectGenre(String genreStr) {
         switch (genreStr) {
             case "classic":
                 return classic;
@@ -142,10 +149,14 @@ public class ReadListPanel extends JPanel implements Constants, ActionListener {
         return none;
     }
 
-    public void updateListPanel() {
+    // modifies: this
+    // effects: updates JList model so that user changes are reflected in GUI
+    private void updateListPanel() {
         listPanel.updateListModel();
     }
 
+    // modifies: this
+    // effects: executes action based on button pressed
     @Override
     public void actionPerformed(ActionEvent e) {
         String titleStr = titleField.getText();
@@ -155,18 +166,21 @@ public class ReadListPanel extends JPanel implements Constants, ActionListener {
         if (e.getSource() == addBookButton) {
             if (!titleStr.equals("") && !authorStr.equals("")) {
                 Book book = new Book(titleStr, authorStr, selectGenre(genreStr));
-                bookCollection.readBook(book);
+                appFrame.getBookCollection().readBook(book);
                 updateListPanel();
             }
         }
 
-        if (e.getSource() == statsButton) {
-            //
+        if (e.getSource() == backButton) {
+            appFrame.remove(this);
+            appFrame.add(new MainMenuPanel(appFrame));
+            appFrame.revalidate();
+            appFrame.repaint();
         }
     }
 
     // getters
     public List<Book> getReadBooks() {
-        return bookCollection.getReadBooks();
+        return appFrame.getBookCollection().getReadBooks();
     }
 }

@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+// panel containing JList of read books
 public class ListPanel extends JPanel implements Constants {
     private ReadListPanel readListPanel;
     private JList<String> list;
@@ -23,17 +24,23 @@ public class ListPanel extends JPanel implements Constants {
         updateListModel();
     }
 
-    public void addBooksToListModel(List<Book> books) {
+    // modifies: this
+    // effects: adds given list of books to list model
+    private void addBooksToListModel(List<Book> books) {
         for (Book b : books) {
             addBookToListModel(b);
         }
     }
 
-    public void addBookToListModel(Book b) {
+    // modifies: this
+    // effects: adds given book to list model
+    private void addBookToListModel(Book b) {
         String string = b.getTitle() + " by " + b.getAuthor() + " - genre: " + b.getGenre();
         listModel.addElement(string);
     }
 
+    // modifies: this
+    // effects: clears list model and reloads books from book collection
     public void updateListModel() {
         listModel.clear();
         List<Book> readBooks = readListPanel.getReadBooks();
@@ -45,6 +52,7 @@ public class ListPanel extends JPanel implements Constants {
         list.setForeground(fontColor);
         list.setSelectionBackground(fontColor);
         list.setSelectionForeground(backgroundColor);
+        list.setFocusable(false);
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -57,7 +65,9 @@ public class ListPanel extends JPanel implements Constants {
         this.add(list);
     }
 
-    public void doubleClickList(MouseEvent e) {
+    // modifies: this
+    // effects: on double-clicking a book in list, creates new panel of book info and adds to side of read list panel
+    private void doubleClickList(MouseEvent e) {
         JList list = (JList) e.getSource();
         if (e.getClickCount() == 2) {
             int index = list.locationToIndex(e.getPoint());

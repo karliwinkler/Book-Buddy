@@ -2,9 +2,9 @@ package ui;
 
 import java.awt.*;
 
+// interface for storing colours, fonts, and dimensions that are used throughout program
 public interface Constants {
     Dimension buttonSize = new Dimension(400, 50);
-    Dimension halfButtonSize = new Dimension(200, 50);
     Dimension smallButtonSize = new Dimension(150, 40);
     Dimension textFieldSize = new Dimension(200, 25);
 

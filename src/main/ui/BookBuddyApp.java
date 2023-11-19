@@ -26,7 +26,6 @@ public class BookBuddyApp extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private MainMenuPanel menuPanel;
-    private ReadListPanel readListPanel;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
@@ -228,7 +227,6 @@ public class BookBuddyApp extends JFrame {
         } else {
             Book book = new Book(title, author, genre);
             bookCollection.readBook(book);
-            readListPanel.updateListPanel();
             System.out.printf("Successfully added " + title + " by " + author + ", genre: " + genre
                     + " to the books you've read!");
         }
@@ -266,7 +264,6 @@ public class BookBuddyApp extends JFrame {
             System.out.println("\nPlease enter your rating out of 5 stars.");
             int rate = Integer.parseInt(input.next());
             if (book.rateBook(rate)) {
-                readListPanel.updateListPanel();
                 System.out.println("Successfully rated " + book.getTitle() + " " + rate + " stars!");
             } else {
                 System.out.println("\nPlease choose a number between 1 and 5");
