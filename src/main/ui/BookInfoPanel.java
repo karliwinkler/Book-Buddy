@@ -37,7 +37,6 @@ public class BookInfoPanel extends JPanel implements Constants, ActionListener {
         author = new JLabel(book.getAuthor());
         author.setFont(new Font(Font.SERIF, Font.ITALIC, 18));
         author.setForeground(fontColor);
-        author.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         this.add(author);
 
         rating = new JLabel("My rating: " + book.getRating() + "/5 stars");
