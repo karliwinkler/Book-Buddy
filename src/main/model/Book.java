@@ -28,6 +28,7 @@ public class Book implements Writable {
     public boolean rateBook(int rating) {
         if (rating > 0 && rating <= 5) {
             this.rating = rating;
+            EventLog.getInstance().logEvent(new Event("Book rated " + rating + " stars."));
             return true;
         }
         return false;
@@ -37,6 +38,7 @@ public class Book implements Writable {
     // effects: adds user's review to book
     public void reviewBook(String review) {
         this.review = review;
+        EventLog.getInstance().logEvent(new Event("Book reviewed."));
     }
 
     // effects: returns true if this has same fields as given book

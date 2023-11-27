@@ -27,6 +27,7 @@ public class BookCollection implements Writable {
     // effects: adds book to read books list
     public void readBook(Book book) {
         readBooks.add(book);
+        EventLog.getInstance().logEvent(new Event("Book added to read list."));
     }
 
     // modifies: this
@@ -35,6 +36,7 @@ public class BookCollection implements Writable {
     public boolean addFavouriteBook(Book book) {
         if (book.containsBook(readBooks)) {
             favouriteBooks.add(book);
+            EventLog.getInstance().logEvent(new Event("Book added to favourites list."));
             return true;
         }
         return false;
@@ -55,6 +57,7 @@ public class BookCollection implements Writable {
     // effects: adds book to list of books user would like to read.
     public void wantToReadBook(Book book) {
         wantToRead.add(book);
+        EventLog.getInstance().logEvent(new Event("Book added to want to read list."));
     }
 
     // modifies: this

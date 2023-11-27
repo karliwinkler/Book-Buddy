@@ -1,12 +1,12 @@
 package ui;
 
-import model.Book;
-import model.BookCollection;
-import model.Genre;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -70,7 +70,24 @@ public class BookBuddyApp extends JFrame {
         menuPanel = new MainMenuPanel(this);
         this.add(menuPanel);
 
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    printLog(EventLog.getInstance());
+                } catch (Exception exception) {
+                    System.out.println("Error printing log.");
+                }
+            }
+        });
+
         this.setVisible(true);
+    }
+
+    private void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.print(next.toString());
+        }
     }
 
     // effects: displays main menu of options
