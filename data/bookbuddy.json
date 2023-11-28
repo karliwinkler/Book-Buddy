@@ -1,25 +1,18 @@
 {
     "read books": [
         {
-            "author": "donna tartt",
-            "review": "so good!!!",
-            "genre": "contemporary",
+            "author": "sdfsfd",
+            "review": "slay",
+            "genre": "classic",
             "rating": 5,
-            "title": "the secret history"
+            "title": "dlsfsnd"
         },
         {
-            "author": "margaret atwood",
+            "author": "fart",
             "review": "no review yet.",
-            "genre": "scifi",
-            "rating": 5,
-            "title": "the handmaids tale"
-        },
-        {
-            "author": "george rr martin",
-            "review": "epic book!!!",
-            "genre": "fantasy",
-            "rating": 4,
-            "title": "game of thrones"
+            "genre": "classic",
+            "rating": 3,
+            "title": "fart"
         }
     ],
     "want to read": [],

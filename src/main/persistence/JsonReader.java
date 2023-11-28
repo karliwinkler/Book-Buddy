@@ -80,6 +80,7 @@ public class JsonReader {
 
     // modifies: book collection
     // effects: parses book from JSON object and adds it to read books list in book collection
+    // uses NoLog methods so events are not added to event log
     private void addBookToRead(BookCollection bc, JSONObject jsonObject) {
         String name = jsonObject.getString("title");
         String author = jsonObject.getString("author");
@@ -88,13 +89,14 @@ public class JsonReader {
         String review = jsonObject.getString("review");
 
         Book book = new Book(name, author, genre);
-        book.rateBook(rating);
-        book.reviewBook(review);
-        bc.readBook(book);
+        book.rateBookNoLog(rating);
+        book.reviewBookNoLog(review);
+        bc.readBookNoLog(book);
     }
 
     // modifies: book collection
     // effects: parses book from JSON object and adds it to want to read list in book collection
+    // uses NoLog methods so events are not added to event log
     private void addBookToWantToRead(BookCollection bc, JSONObject jsonObject) {
         String name = jsonObject.getString("title");
         String author = jsonObject.getString("author");
@@ -103,13 +105,14 @@ public class JsonReader {
         String review = jsonObject.getString("review");
 
         Book book = new Book(name, author, genre);
-        book.rateBook(rating);
-        book.reviewBook(review);
-        bc.wantToReadBook(book);
+        book.rateBookNoLog(rating);
+        book.reviewBookNoLog(review);
+        bc.wantToReadBookNoLog(book);
     }
 
     // modifies: book collection
     // effects: parses book from JSON object and adds it to favourites list in book collection
+    // uses NoLog methods so events are not added to event log
     private void addBookToFavs(BookCollection bc, JSONObject jsonObject) {
         String name = jsonObject.getString("title");
         String author = jsonObject.getString("author");
@@ -118,9 +121,9 @@ public class JsonReader {
         String review = jsonObject.getString("review");
 
         Book book = new Book(name, author, genre);
-        book.rateBook(rating);
-        book.reviewBook(review);
-        bc.addFavouriteBook(book);
+        book.rateBookNoLog(rating);
+        book.reviewBookNoLog(review);
+        bc.addFavouriteBookNoLog(book);
     }
 
 }

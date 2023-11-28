@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.List;
+import java.util.Objects;
 
 // represents a book with title, author, genre, and user's rating and review
 public class Book implements Writable {
@@ -35,30 +36,48 @@ public class Book implements Writable {
     }
 
     // modifies: this
+    // effects: for printing event log after loading saved data - doesn't log event
+    public boolean rateBookNoLog(int rating) {
+        if (rating > 0 && rating <= 5) {
+            this.rating = rating;
+            return true;
+        }
+        return false;
+    }
+
+    // modifies: this
     // effects: adds user's review to book
     public void reviewBook(String review) {
         this.review = review;
         EventLog.getInstance().logEvent(new Event("Book reviewed."));
     }
 
-    // effects: returns true if this has same fields as given book
-    public boolean checkSameBook(Book other) {
-        return this.title.equals(other.getTitle())
-                && this.author.equals(other.getAuthor())
-                && this.genre == other.getGenre()
-                && this.rating == other.getRating()
-                && this.review.equals(other.getReview());
+    // modifies: this
+    // effects: for printing event log after loading saved data - doesn't log event
+    public void reviewBookNoLog(String review) {
+        this.review = review;
     }
 
-    // effects: returns true if given list of books contains this
-    public boolean containsBook(List<Book> books) {
-        for (Book next : books) {
-            if (this.checkSameBook(next)) {
-                return true;
-            }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return false;
+        if (!(o instanceof Book)) {
+            return false;
+        }
+        Book book = (Book) o;
+        return rating == book.rating
+                && Objects.equals(title, book.title)
+                && Objects.equals(author, book.author)
+                && genre == book.genre && Objects.equals(review, book.review);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, author, genre, rating, review);
+    }
+
 
     @Override
     public JSONObject toJson() {

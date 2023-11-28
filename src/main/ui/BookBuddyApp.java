@@ -1,5 +1,7 @@
 package ui;
 
+import exceptions.EmptyBookListException;
+import exceptions.LogException;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -72,11 +74,11 @@ public class BookBuddyApp extends JFrame {
 
         this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent we) {
                 try {
                     printLog(EventLog.getInstance());
-                } catch (Exception exception) {
-                    System.out.println("Error printing log.");
+                } catch (LogException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         });
@@ -84,9 +86,10 @@ public class BookBuddyApp extends JFrame {
         this.setVisible(true);
     }
 
-    private void printLog(EventLog el) {
+    private void printLog(EventLog el) throws LogException {
+        System.out.println("\n");
         for (Event next : el) {
-            System.out.print(next.toString());
+            System.out.println(next.toString());
         }
     }
 
@@ -251,20 +254,21 @@ public class BookBuddyApp extends JFrame {
 
     // effects: returns corresponding genre based on user input, if input is invalid, returns genre none
     private Genre selectGenre(String scan) {
-        if (scan.equals("c")) {
-            return classic;
-        } else if (scan.equals("f")) {
-            return fantasy;
-        } else if (scan.equals("m")) {
-            return mystery;
-        } else if (scan.equals("r")) {
-            return romance;
-        } else if (scan.equals("n")) {
-            return nonfiction;
-        } else if (scan.equals("s")) {
-            return scifi;
-        } else if (scan.equals("o")) {
-            return contemporary;
+        switch (scan) {
+            case "c":
+                return classic;
+            case "f":
+                return fantasy;
+            case "m":
+                return mystery;
+            case "r":
+                return romance;
+            case "n":
+                return nonfiction;
+            case "s":
+                return scifi;
+            case "o":
+                return contemporary;
         }
         return none;
     }
@@ -308,14 +312,14 @@ public class BookBuddyApp extends JFrame {
     private void showStats() {
         int num = bookCollection.getReadBooks().size();
 
-        if (num == 0) {
-            System.out.println("You haven't logged any books yet! Add a book to view your stats.");
-        } else {
+        try {
             String topGenre = bookCollection.getTopGenre().toString();
             String topAuthor = bookCollection.getTopAuthor();
             System.out.println("You have read a total of " + num + " books!");
             System.out.println("Your top genre is: " + topGenre + ".");
             System.out.println("Your top author is: " + topAuthor + ".");
+        } catch (EmptyBookListException e) {
+            System.out.println(e.getMessage());
         }
     }
 

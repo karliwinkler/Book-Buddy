@@ -1,5 +1,6 @@
-package model;
+package model.tests;
 
+import model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,27 +49,27 @@ class BookTest {
     @Test
     public void testCheckSameBookTrue() {
         Book testBook2 = new Book("Pride and Prejudice", "Jane Austen", classic);
-        assertTrue(testBook.checkSameBook(testBook2));
+        assertTrue(testBook.equals(testBook2));
     }
 
     @Test
     public void testCheckSameBookFalse() {
         Book testBook2 = new Book("Pride and Prejudice", "Jane Austen", classic);
         testBook2.reviewBook("awesome.");
-        assertFalse(testBook.checkSameBook(testBook2));
+        assertFalse(testBook.equals(testBook2));
 
         Book testBook3 = new Book("Pride, Prejudice, and Zombies", "Jane Austen", classic);
-        assertFalse(testBook.checkSameBook(testBook3));
+        assertFalse(testBook.equals(testBook3));
 
         Book testBook4 = new Book("Pride and Prejudice", "Jane Doe", classic);
-        assertFalse(testBook.checkSameBook(testBook4));
+        assertFalse(testBook.equals(testBook4));
 
         Book testBook5 = new Book("Pride and Prejudice", "Jane Austen", fantasy);
-        assertFalse(testBook.checkSameBook(testBook5));
+        assertFalse(testBook.equals(testBook5));
 
         Book testBook6 = new Book("Pride and Prejudice", "Jane Austen", classic);
         testBook6.rateBook(5);
-        assertFalse(testBook.checkSameBook(testBook6));
+        assertFalse(testBook.equals(testBook6));
     }
 
     @Test
@@ -76,19 +77,19 @@ class BookTest {
         Book testBook2 = new Book("Pride and Prejudice", "Jane Austen", classic);
         List<Book> bookList = new ArrayList<>();
         bookList.add(testBook2);
-        assertTrue(testBook.containsBook(bookList));
+        assertTrue(bookList.contains(testBook));
     }
     @Test
     public void checkContainsBookFalse() {
         Book testBook3 = new Book("Pride and Prejudice", "Jane Doe", classic);
         List<Book> bookList = new ArrayList<>();
         bookList.add(testBook3);
-        assertFalse(testBook.containsBook(bookList));
+        assertFalse(bookList.contains(testBook));
     }
     @Test
     public void checkContainsBookEmpty() {
         List<Book> bookList = new ArrayList<>();
-        assertFalse(testBook.containsBook(bookList));
+        assertFalse(bookList.contains(testBook));
     }
 
 }

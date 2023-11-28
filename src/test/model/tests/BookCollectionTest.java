@@ -1,5 +1,8 @@
-package model;
+package model.tests;
 
+import exceptions.EmptyBookListException;
+import model.Book;
+import model.BookCollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -168,20 +171,41 @@ public class BookCollectionTest {
 
     @Test
     public void testGetTopGenre() {
-        testBC.readBook(testBookC);
-        assertEquals(mystery, testBC.getTopGenre());
+        try {
+            testBC.readBook(testBookC);
+            assertEquals(mystery, testBC.getTopGenre());
 
-        testBC.readBook(testBookA);
-        testBC.readBook(testBookB);
-        testBC.readBook(testBookD);
-        assertEquals(classic, testBC.getTopGenre());
+            testBC.readBook(testBookA);
+            testBC.readBook(testBookB);
+            testBC.readBook(testBookD);
+            assertEquals(classic, testBC.getTopGenre());
+        } catch (EmptyBookListException e) {
+            fail("EmptyBookListException not expected");
+        }
+
     }
 
     @Test
     public void testGetTopGenreEqual() {
-        testBC.readBook(testBookC);
-        testBC.readBook(testBookD);
-        assertEquals(mystery, testBC.getTopGenre());
+        try {
+            testBC.readBook(testBookC);
+            testBC.readBook(testBookD);
+            assertEquals(mystery, testBC.getTopGenre());
+        } catch (EmptyBookListException e) {
+            fail("EmptyBookListException not expected");
+        }
+
+    }
+
+    @Test
+    public void testGetTopGenreEmpty() {
+        try {
+            testBC.getTopGenre();
+            fail("EmptyBookListException expected");
+        } catch (EmptyBookListException e) {
+            // pass
+        }
+
     }
 
     @Test

@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.EmptyBookListException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -31,12 +32,28 @@ public class BookCollection implements Writable {
     }
 
     // modifies: this
+    // effects: for printing event log after loading saved data - doesn't log event
+    public void readBookNoLog(Book book) {
+        readBooks.add(book);
+    }
+
+    // modifies: this
     // effects: if book is in read books list, adds book to favourites list and returns true,
     // otherwise returns false.
     public boolean addFavouriteBook(Book book) {
-        if (book.containsBook(readBooks)) {
+        if (readBooks.contains(book)) {
             favouriteBooks.add(book);
             EventLog.getInstance().logEvent(new Event("Book added to favourites list."));
+            return true;
+        }
+        return false;
+    }
+
+    // modifies: this
+    // effects: for printing event log after loading saved data - doesn't log event
+    public boolean addFavouriteBookNoLog(Book book) {
+        if (readBooks.contains(book)) {
+            favouriteBooks.add(book);
             return true;
         }
         return false;
@@ -59,6 +76,13 @@ public class BookCollection implements Writable {
         wantToRead.add(book);
         EventLog.getInstance().logEvent(new Event("Book added to want to read list."));
     }
+
+    // modifies: this
+    // effects: for printing event log after loading saved data - doesn't log event
+    public void wantToReadBookNoLog(Book book) {
+        wantToRead.add(book);
+    }
+
 
     // modifies: this
     // effects: removes book from list of books user would like to read and returns true.
@@ -85,8 +109,13 @@ public class BookCollection implements Writable {
 
     // requires: read books list cannot be empty
     // effects: returns the genre user has read the most books of. If genres have equal amount,
-    // the first genre that appears in read books list is returned.
-    public Genre getTopGenre() {
+    // the first genre that appears in read books list is returned. throws EmptyBookListException if
+    // read books is empty.
+    public Genre getTopGenre() throws EmptyBookListException {
+        if (readBooks.isEmpty()) {
+            throw new EmptyBookListException();
+        }
+
         Genre topGenre = readBooks.get(0).getGenre();
 
         for (Book b : readBooks) {
@@ -137,6 +166,7 @@ public class BookCollection implements Writable {
 
     @Override
     public JSONObject toJson() {
+        EventLog.getInstance().logEvent(new Event("Book collection saved to file."));
         JSONObject json = new JSONObject();
         json.put("read books", listToJson(readBooks));
         json.put("want to read", listToJson(wantToRead));

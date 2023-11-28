@@ -27,7 +27,7 @@ functionalities. This project will be a fun opportunity to create the features a
 design choices that I would like to see in a book-tracking application as a reader 
 myself and someone who would actually use an application like this.
 
-### User Stories
+## User Stories
 -	As a user, I want to be able to add a book I’ve read to a list of my recently read books.
 -	As a user, I want to be able to view a list of books I’ve read recently.
 -	As a user, I want to be able to add a rating out of five stars to a book I’ve read.
@@ -38,7 +38,7 @@ myself and someone who would actually use an application like this.
 and my favourites list to file.
 -   As a user, I want to have the option to load my saved lists of books from file when I start the application.
 
-# Instructions for Grader
+## Instructions for Grader
 
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by adding a book
 to your read list. Press the button on the main menu "view books I've read", then enter the title, author, and genre 
@@ -50,3 +50,19 @@ the "rate book" or "review book" buttons on the right side panel.
 There is also a small image of an arrow on a button on the read list page.
 - You can save the state of my application by clicking the "save books" button on the main menu.
 - You can reload the state of my application by clicking the "load books" button on the main menu.
+
+## Phase 4: Task 2
+Example event log:
+
+Mon Nov 27 18:29:29 PST 2023 \
+Book added to read list. \
+Mon Nov 27 18:29:36 PST 2023 \
+Book rated 5 stars.\
+Mon Nov 27 18:29:40 PST 2023\
+Book reviewed.\
+Mon Nov 27 18:29:46 PST 2023\
+Book added to read list.\
+Mon Nov 27 18:29:52 PST 2023\
+Book rated 3 stars.\
+Mon Nov 27 18:30:06 PST 2023\
+Book collection saved to file.
