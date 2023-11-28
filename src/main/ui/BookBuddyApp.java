@@ -18,15 +18,17 @@ import static model.Genre.*;
 
 // BookBuddy reading tracker application
 public class BookBuddyApp extends JFrame {
-    private static final String JSON_STORE = "./data/bookbuddy.json";
     private BookCollection bookCollection;
     private Scanner input;
     private Boolean mainDisplayed;
     private Boolean menu1Displayed;
     private Boolean menu2Displayed;
     private Boolean menu3Displayed;
+
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/bookbuddy.json";
+
     private MainMenuPanel menuPanel;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;

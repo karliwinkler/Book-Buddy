@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // side panel with info on specific book and option to rate and review book
-public class BookInfoPanel extends JPanel implements Constants, ActionListener {
+public class BookInfoPanel extends JPanel implements PanelStyle, ActionListener {
     Book book;
     JLabel title;
     JLabel author;

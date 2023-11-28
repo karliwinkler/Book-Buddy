@@ -1,4 +1,4 @@
-package persistence;
+package persistence.tests;
 
 import model.Book;
 import model.BookCollection;

@@ -12,7 +12,7 @@ import java.util.List;
 import static model.Genre.*;
 
 // panel showing list of read books, option to add books, and book info
-public class ReadListPanel extends JPanel implements Constants, ActionListener {
+public class ReadListPanel extends JPanel implements PanelStyle, ActionListener {
     private BookBuddyApp appFrame;
     private ListPanel listPanel;
     private JPanel bottomPanel;

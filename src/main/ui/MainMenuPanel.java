@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // panel with main menu and options
-public class MainMenuPanel extends JPanel implements Constants, ActionListener {
+public class MainMenuPanel extends JPanel implements PanelStyle, ActionListener {
     BookBuddyApp appFrame;
     ReadListPanel readListPanel;
     JPanel centrePanel;

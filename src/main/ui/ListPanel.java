@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 // panel containing JList of read books
-public class ListPanel extends JPanel implements Constants {
+public class ListPanel extends JPanel implements PanelStyle {
     private ReadListPanel readListPanel;
     private JList<String> list;
     private DefaultListModel<String> listModel;

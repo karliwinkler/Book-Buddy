@@ -66,3 +66,20 @@ Mon Nov 27 18:29:52 PST 2023\
 Book rated 3 stars.\
 Mon Nov 27 18:30:06 PST 2023\
 Book collection saved to file.
+
+## Phase 4: Task 3
+If I had more time to improve my project, something I would focus on would be reducing coupling between the different 
+"panel" classes (MainMenuPanel, ReadListPanel, ListPanel, BookInfoPanel). All these classes implement the PanelStyle 
+interface, which stores fields of colours, fonts, and sizes, and most of them have very similar "set up" methods,
+for setting up buttons, labels and colours. I would try using an abstract class instead of an interface
+and refactoring some of these similar methods to be abstract methods. I would also change this abstract class so that 
+instead of just storing colours, fonts, and sizes, there are concrete helper methods that set these for the panel,
+so I don't have to pass these fields as parameters everytime.
+
+Another change I would consider adding is implementing the observer method. As of now,
+many of the panel classes have an "update" method that repaints the panel when the book collection is edited. Instead
+of this,
+I would make BookCollection the subject and make MainMenuPanel, ReadListPanel, and ListPanel the observers so that
+they could be automatically updated whenever there is a change to the book collection. This would allow me to reduce 
+coupling by removing some unnecessary associations, like ReadListPanel and MainMenuPanel both having a field 
+of BookBuddyApp.

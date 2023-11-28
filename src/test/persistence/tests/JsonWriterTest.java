@@ -5,7 +5,6 @@ import model.BookCollection;
 import model.Genre;
 import org.junit.Test;
 import persistence.JsonReader;
-import persistence.JsonTest;
 import persistence.JsonWriter;
 
 import java.io.IOException;
